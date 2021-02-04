@@ -48,8 +48,8 @@ public class CervejasController {
 //		}
 		
 		//Linha adicionadas pra verificar se a busca é realizada. (Foi conferido e a busca é realizada)
-//		Estilo estilo = estilos.findOne(cerveja.getCodigo());
-//		cerveja.setEstilo(estilo);
+		Estilo estilo = estilos.findOne(cerveja.getEstilo().getCodigo());
+		cerveja.setEstilo(estilo);
 		
 		cadastroCervejaService.salvar(cerveja);
 		attributes.addFlashAttribute("mensagem", "Cerveja salva com sucesso!");
