@@ -43,9 +43,9 @@ public class CervejasController {
 	@RequestMapping(value = "/cervejas/novo", method = RequestMethod.POST)
 	public ModelAndView cadastrar(@Valid Cerveja cerveja, BindingResult result,
 			Model model, RedirectAttributes attributes) {
-//		if (result.hasErrors()) {
-//			return novo(cerveja);
-//		}
+		if (result.hasErrors()) {
+			return novo(cerveja);
+		}
 		
 		//Linha adicionadas pra verificar se a busca é realizada. (Foi conferido e a busca é realizada)
 		Estilo estilo = estilos.findOne(cerveja.getEstilo().getCodigo());

@@ -1,17 +1,25 @@
 package com.jjpsistem.brewer.config;
 
+import java.math.BigDecimal;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
+
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.format.datetime.standard.DateTimeFormatterRegistrar;
+import org.springframework.format.number.NumberStyleFormatter;
 import org.springframework.format.support.DefaultFormattingConversionService;
 import org.springframework.format.support.FormattingConversionService;
+import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.i18n.FixedLocaleResolver;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.spring4.SpringTemplateEngine;
 import org.thymeleaf.spring4.templateresolver.SpringResourceTemplateResolver;
@@ -19,6 +27,7 @@ import org.thymeleaf.spring4.view.ThymeleafViewResolver;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ITemplateResolver;
 
+import com.jjpsistem.brewer.config.format.BigDecimalFormatter;
 import com.jjpsistem.brewer.controller.CervejasController;
 import com.jjpsistem.brewer.controller.converter.EstiloConverter;
 
@@ -76,7 +85,26 @@ public class WebConfig extends WebMvcConfigurerAdapter implements ApplicationCon
 		DefaultFormattingConversionService conversionService = new DefaultFormattingConversionService();
 		conversionService.addConverter(new EstiloConverter());
 		
+		NumberStyleFormatter bigDecimalFormatter = new NumberStyleFormatter("#,##0.00");
+		//BigDecimalFormatter bigDecimalFormatter = new BigDecimalFormatter("#,##0.00");
+		conversionService.addFormatterForFieldType(BigDecimal.class, bigDecimalFormatter);
+		
+		NumberStyleFormatter integerFormatter = new NumberStyleFormatter("#,##0");
+		//BigDecimalFormatter integerFormatter = new BigDecimalFormatter("#,##0");
+		conversionService.addFormatterForFieldType(Integer.class, integerFormatter);
+		
+		// API de Datas do Java 8
+//		DateTimeFormatterRegistrar dateTimeFormatter = new DateTimeFormatterRegistrar();
+//		dateTimeFormatter.setDateFormatter(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+//		dateTimeFormatter.setTimeFormatter(DateTimeFormatter.ofPattern("HH:mm"));
+//		dateTimeFormatter.registerFormatters(conversionService);
+		
 		return conversionService;
+	}
+	
+	@Bean
+	public LocaleResolver localResolver() {
+		return new FixedLocaleResolver(new Locale("pt", "BR"));
 	}
 	
 }
