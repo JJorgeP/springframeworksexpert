@@ -12,7 +12,6 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.jjpsistem.brewer.model.Cerveja;
-import com.jjpsistem.brewer.model.Estilo;
 import com.jjpsistem.brewer.model.Origem;
 import com.jjpsistem.brewer.model.Sabor;
 import com.jjpsistem.brewer.repository.Estilos;
@@ -48,8 +47,8 @@ public class CervejasController {
 		}
 		
 		//Linha adicionadas pra verificar se a busca é realizada. (Foi conferido e a busca é realizada)
-		Estilo estilo = estilos.findOne(cerveja.getEstilo().getCodigo());
-		cerveja.setEstilo(estilo);
+//		Estilo estilo = estilos.findOne(cerveja.getEstilo().getCodigo());
+//		cerveja.setEstilo(estilo);
 		
 		cadastroCervejaService.salvar(cerveja);
 		attributes.addFlashAttribute("mensagem", "Cerveja salva com sucesso!");

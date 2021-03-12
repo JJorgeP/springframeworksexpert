@@ -17,7 +17,7 @@ import javax.validation.constraints.Pattern;
 public @interface SKU {
 	
 	@OverridesAttribute(constraint = Pattern.class, name = "message")
-	String message() default "Favor prencher o campo sku neste padrão: XX9999";
+	String message() default "Favor prencher o campo sku neste formato: XX9999";
 	
 	Class<?>[] groups() default {};
 	Class<? extends Payload>[] payload() default {};
